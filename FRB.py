@@ -36,9 +36,11 @@ class FadingReplayBuffer:
 
     # samples big batch then re-samples smaller batch with less priority to old data
     def sample(self, batch_size, device, CER=False):
-        if len(self.buffer) >= 1024:
-            
-            #batch = random.sample(self.buffer, k=batch_size)
+        
+        if len(self.buffer) >= batch_size:
+            batch = random.sample(self.buffer, k=batch_size)
+
+        elif len(self.buffer) >= 1024:
 
             sample_indices = random.sample(self.indices, k=1024)
             probs = self.fade(np.array(sample_indices)/self.length)
