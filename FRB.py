@@ -47,16 +47,16 @@ class FadingReplayBuffer:
             batch_indices = np.random.default_rng().choice(sample_indices, p=probs/np.sum(probs), size=batch_size, replace=False)
             batch = [self.buffer[indx-1] for indx in batch_indices]
 
-            if CER: batch.append(self.buffer[-1])
-            states, actions, rewards, next_states, dones = map(np.vstack, zip(*batch))
-            
-            return (
-                torch.FloatTensor(states).to(device),
-                torch.FloatTensor(actions).to(device),
-                torch.FloatTensor(rewards).to(device),
-                torch.FloatTensor(next_states).to(device),
-                torch.FloatTensor(dones).to(device),
-            )
+        if CER: batch.append(self.buffer[-1])
+        states, actions, rewards, next_states, dones = map(np.vstack, zip(*batch))
+        
+        return (
+            torch.FloatTensor(states).to(device),
+            torch.FloatTensor(actions).to(device),
+            torch.FloatTensor(rewards).to(device),
+            torch.FloatTensor(next_states).to(device),
+            torch.FloatTensor(dones).to(device),
+        )
 
             
 
