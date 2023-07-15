@@ -2,8 +2,9 @@ class FadingReplayBuffer:
     def __init__(self, capacity=1280000):
         self.capacity = capacity
         self.cache, self.indices = [], []
-        self.buffer = deque(maxlen=capacity)
+        self.buffer, self.length = deque(maxlen=capacity), 0
         self.x, self.step, self.s = 0.0, 1/self.capacity, 1.0
+        
 
     # priority for old memories are fading gradually
     def fade(self, norm_index):
